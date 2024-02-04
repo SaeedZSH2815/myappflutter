@@ -25,18 +25,23 @@ class NewTransaction extends StatelessWidget {
                 decoration: const InputDecoration(labelText: "Amount Price"),
                 controller: amountCtrl,
                 keyboardType: TextInputType.number,
+                onSubmitted: (_) => submt(),
               ),
               Align(
                 alignment: Alignment.topRight,
                 child: TextButton.icon(
-                    onPressed: () {
-                      addTx(titleCtrl.text, int.parse(amountCtrl.text));
-                    },
+                       onPressed: submt
+                    ,
                     icon: const Icon(Icons.add),
                     label: const Text("Add..")),
               )
             ],
           )),
     );
+  }
+
+  void submt() {
+    addTx(titleCtrl.text, int.parse(amountCtrl.text));
+
   }
 }
