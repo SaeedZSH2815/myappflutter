@@ -12,12 +12,8 @@ class CustomAppBar extends AppBar {
           automaticallyImplyLeading: false,
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(Icons.add),
               onPressed: () => {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: () => {null},
             ),
           ],
         );
