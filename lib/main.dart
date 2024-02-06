@@ -10,12 +10,16 @@ void main() {
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
-
+  App({super.key});
+  final ThemeData theme = ThemeData();
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "FirstApp",
+      theme: theme.copyWith(
+        colorScheme: theme.colorScheme.copyWith(secondary: Colors.blue),
+        primaryColor: Colors.blue,
+      ),
       home: MyHomePage(),
     );
   }
@@ -49,14 +53,19 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
         context: clCtx,
         builder: (_) {
-          return NewTransaction(addTx: addNewTrans);
+          return GestureDetector(
+            onTap: () {},
+            behavior: HitTestBehavior.deferToChild,
+            child: NewTransaction(addTx: addNewTrans),
+          );
         });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBars("retert"),
+      appBar:
+          AppBars(cltitle: "retert", clColor: Theme.of(context).primaryColor),
       body: SingleChildScrollView(
         child: TransactionList(userTransList: translist),
       ),

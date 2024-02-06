@@ -21,13 +21,15 @@ class CustomAppBar extends AppBar {
 
 // ignore: must_be_immutable
 class AppBars extends AppBar {
+  Color clColor;
   String cltitle;
-  AppBars(this.cltitle, {super.key})
+  AppBars({required this.cltitle,required this.clColor, super.key})
       : super(
+          foregroundColor: Colors.amber,
           iconTheme: const IconThemeData(
             color: Colors.black, //change your color here
           ),
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: clColor,
           title: Text(cltitle),
           elevation: 0.0,
           automaticallyImplyLeading: false,

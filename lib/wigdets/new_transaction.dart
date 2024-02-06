@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final TextEditingController titleCtrl = TextEditingController();
-  final TextEditingController amountCtrl = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addTx;
-  NewTransaction({super.key, required this.addTx});
+  const NewTransaction({super.key, required this.addTx});
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final TextEditingController titleCtrl = TextEditingController();
+
+  final TextEditingController amountCtrl = TextEditingController();
 
   // NewTransaction({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,8 +36,7 @@ class NewTransaction extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: TextButton.icon(
-                       onPressed: submt
-                    ,
+                    onPressed: submt,
                     icon: const Icon(Icons.add),
                     label: const Text("Add..")),
               )
@@ -41,7 +46,8 @@ class NewTransaction extends StatelessWidget {
   }
 
   void submt() {
-    addTx(titleCtrl.text, int.parse(amountCtrl.text));
+    widget.addTx(titleCtrl.text, int.parse(amountCtrl.text));
 
+    Navigator.of(context).pop();
   }
 }
