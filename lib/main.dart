@@ -16,9 +16,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "FirstApp",
-      theme: theme.copyWith(
-        colorScheme: theme.colorScheme.copyWith(secondary: Colors.blue),
-        primaryColor: Colors.blue,
+      theme: ThemeData(
+        fontFamily: 'OpenSans',
       ),
       home: MyHomePage(),
     );
@@ -66,9 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar:
           AppBars(cltitle: "retert", clColor: Theme.of(context).primaryColor),
-      body: SingleChildScrollView(
-        child: TransactionList(userTransList: translist),
-      ),
+      body: translist.length < 3
+          ? NoTransList()
+          : SingleChildScrollView(
+              child: TransactionList(userTransList: translist),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
