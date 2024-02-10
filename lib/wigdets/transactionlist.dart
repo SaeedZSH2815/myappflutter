@@ -8,42 +8,35 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      child: ListTile();
-    //   ListView.builder(
-    //       itemBuilder: (BuildContext context, int index) {
-    //         return Card(
-    //           child: Row(
-    //             children: [
-    //               Container(
-    //                 margin: const EdgeInsets.symmetric(
-    //                     horizontal: 15, vertical: 10),
-    //                 padding: const EdgeInsets.all(2),
-    //                 decoration: BoxDecoration(
-    //                     border: Border.all(
-    //                         color: Theme.of(context).primaryColor, width: 2)),
-    //                 child: Text(userTransList[index].tAmount.toString(),
-    //                     style: const TextStyle(
-    //                         fontWeight: FontWeight.bold,
-    //                         fontSize: 15,
-    //                         color: Colors.purple)),
-    //               ),
-    //               Column(
-    //                 children: [
-    //                   Text(
-    //                     userTransList[index].tTitle,
-    //                     style: const TextStyle(
-    //                         fontSize: 20, fontWeight: FontWeight.bold),
-    //                   ),
-    //                   Text(DateFormat().format(userTransList[index].tDate))
-    //                 ],
-    //               )
-    //             ],
-    //           ),
-    //         );
-    //       },
-    //       itemCount: userTransList.length),
-    // );
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 6,
+              margin: EdgeInsets.all(5),
+              child: ListTile(
+                trailing: Text("jnhj"),
+                leading: CircleAvatar(
+                    radius: 30,
+                    child: Padding(
+                      padding: EdgeInsets.all(15),
+                      child: FittedBox(
+                          child: Text("${this.userTransList[index].tAmount}")),
+                    )),
+                title: Text(
+                  userTransList[index].tTitle,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                subtitle: Text(
+                    DateFormat.yMMMEd().format(userTransList[index].tDate)),
+                onTap: () {},
+                selectedColor: Colors.black,
+                focusColor: Colors.brown,
+              ),
+            );
+          },
+          itemCount: userTransList.length),
+    );
     /* return Container(
       height: 400,
       child: Card(

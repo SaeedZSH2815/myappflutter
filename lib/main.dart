@@ -20,8 +20,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: "FirstApp",
       theme: ThemeData(
-        fontFamily: 'OpenSans',
-      ),
+          fontFamily: 'OpenSans',
+          textTheme: TextTheme(titleSmall: TextStyle(color: Colors.amber))),
       home: MyHomePage(),
     );
   }
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Transaction(
         tId: 1,
         tTitle: "Shoes",
-        tAmount: 1000,
+        tAmount: 100002,
         tDate: DateTime.now().add(Duration(days: -15))),
     Transaction(
         tId: 2,
