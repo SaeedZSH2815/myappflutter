@@ -1,4 +1,7 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import '../wigdets/showdatepicker.dart';
 
 class CustomAppBar extends AppBar {
   CustomAppBar({super.key})
@@ -23,7 +26,12 @@ class CustomAppBar extends AppBar {
 class AppBars extends AppBar {
   Color clColor;
   String cltitle;
-  AppBars({required this.cltitle,required this.clColor, super.key})
+  BuildContext clTx;
+  AppBars(
+      {required this.clTx,
+      required this.cltitle,
+      required this.clColor,
+      super.key})
       : super(
           foregroundColor: Colors.amber,
           iconTheme: const IconThemeData(
@@ -36,7 +44,7 @@ class AppBars extends AppBar {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.notifications),
-              onPressed: () => {},
+              onPressed: () => {AShowDatePicker.aShowDatePicker(clTx)},
             ),
             IconButton(
               icon: const Icon(Icons.person),
