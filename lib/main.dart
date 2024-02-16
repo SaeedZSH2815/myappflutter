@@ -1,4 +1,7 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:myappflutter/wigdets/aListView.dart';
 import 'package:myappflutter/wigdets/new_transaction.dart';
 import 'package:myappflutter/wigdets/test.dart';
 import './wigdets/customappbar.dart';
@@ -7,13 +10,17 @@ import './models/treansaction.dart';
 import './wigdets/transactionlist.dart';
 import './wigdets/NoTransList.dart';
 import './wigdets/chart.dart';
+//import 'dart:convert' as convert;
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(App());
+  runApp(MyApp());
 }
 
-class App extends StatelessWidget {
-  App({super.key});
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
   final ThemeData theme = ThemeData();
   @override
   Widget build(BuildContext context) {
@@ -35,6 +42,48 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final ScrollController clController = ScrollController();
+  List aItem = List.generate(15, (index) {
+    return 'Item${index}';
+  });
+  int clPage = 0;
+
+  @override
+  void dispose() {
+    clController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetch();
+    clController.addListener(() {
+      if (clController.position.maxScrollExtent == clController.offset) {
+        fetch();
+      }
+    });
+  }
+
+  Future fetch() async {
+    final url = Uri.parse(
+        "https://jsonplaceholder.typicode.com/posts?_limit=25&_page=${clPage}");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final List newItemList = convert.jsonDecode(response.body);
+
+      setState(() {
+        clPage++;
+        aItem.addAll(newItemList.map<String>((e) {
+          final number = e['id'];
+          return 'item$number';
+        }).toList());
+      });
+
+      ///print(newItemList.toString());
+    }
+  }
+
   final List<Transaction> translist = [
     Transaction(
         tId: 1,
@@ -84,13 +133,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // fetch();
     return Scaffold(
       appBar: AppBars(
           clTx: context,
-          cltitle: "retert",
+          cltitle: aItem.length.toString(),
           clColor: Theme.of(context).primaryColor),
       body: translist.length < 4
-          ? const Test()
+          //  ? TransactionList(userTransList: translist)
+          ? SingleChildScrollView(
+              child: Column(children: [
+                AListView(
+                  clItemList: aItem,
+                  clcontroller: clController,
+                ),
+              ]),
+            )
           : SingleChildScrollView(
               child: Column(
               children: [
@@ -102,7 +160,10 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          startAddNewTransaction(context);
+          //startAddNewTransaction(context);
+          //setState(() {
+          //  clPage++;
+          fetch();
         },
       ),
     );
